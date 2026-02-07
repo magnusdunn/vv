@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="floating-hearts">
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+        <div class="heart-bg"></div>
+    </div>
+
+    <main class="container" id="main-container">
+        <div class="card" id="question-card">
+            <div class="card-inner">
+                <div class="decorative-corner top-left"></div>
+                <div class="decorative-corner top-right"></div>
+                <div class="decorative-corner bottom-left"></div>
+                <div class="decorative-corner bottom-right"></div>
+                
+                <div class="heart-icon">
+                    <svg viewBox="0 0 100 100" class="heart-svg">
+                        <path d="M50 88.9L43.1 82.6C17.5 59.4 0 43.6 0 24.3C0 8.5 12.3-3.2 27.5 0.7C36 2.9 43.8 9.4 50 18.5C56.2 9.4 64 2.9 72.5 0.7C87.7-3.2 100 8.5 100 24.3C100 43.6 82.5 59.4 56.9 82.6L50 88.9Z"/>
+                    </svg>
+                </div>
+                
+                <h1 class="title">Will You Be My Valentine?</h1>
+                <p class="subtitle">My heart beats only for you</p>
+                
+                <div class="buttons">
+                    <button class="btn btn-yes" id="yes-btn">Yes, Forever!</button>
+                    <button class="btn btn-no" id="no-btn">No</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="celebration hidden" id="celebration">
+            <div class="explosion-container" id="explosion-container">
+                <div class="exploding-heart"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+                <div class="heart-particle"></div>
+            </div>
+            
+            <div class="final-message hidden" id="final-message">
+                <div class="photo-frame">
+                    <div class="frame-border">
+                        <div class="photo-placeholder">
+                            <svg viewBox="0 0 200 200" class="couple-hearts">
+                                <defs>
+                                    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ff6b9d"/>
+                                        <stop offset="100%" style="stop-color:#c44569"/>
+                                    </linearGradient>
+                                </defs>
+                                <path class="heart-left" fill="url(#heartGradient)" d="M60 120L40 100C20 80 20 50 40 35C55 23 75 30 85 50L60 120Z" transform="translate(-15, 20)"/>
+                                <path class="heart-right" fill="url(#heartGradient)" d="M60 120L80 100C100 80 100 50 80 35C65 23 45 30 35 50L60 120Z" transform="translate(75, 20)"/>
+                                <path class="heart-main" fill="url(#heartGradient)" d="M100 160L85 147C55 120 35 102 35 80C35 62 50 50 68 50C79 50 89 56 100 68C111 56 121 50 132 50C150 50 165 62 165 80C165 102 145 120 115 147L100 160Z" transform="translate(0, 10)"/>
+                            </svg>
+                            <span class="placeholder-text">Our Love Story</span>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="love-message">You've Made Me the Happiest!</h2>
+                <p class="love-subtitle">Forever & Always ♥</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const questionCard = document.getElementById('question-card');
+        const celebration = document.getElementById('celebration');
+        const explosionContainer = document.getElementById('explosion-container');
+        const finalMessage = document.getElementById('final-message');
+        const mainContainer = document.getElementById('main-container');
+
+        // Make no button run away
+        noBtn.addEventListener('mouseenter', function(e) {
+            const btnRect = noBtn.getBoundingClientRect();
+            const padding = 20;
+            
+            // Calculate bounds within the viewport
+            const maxX = window.innerWidth - btnRect.width - padding;
+            const maxY = window.innerHeight - btnRect.height - padding;
+            
+            let newX, newY;
+            let attempts = 0;
+            
+            // Keep trying until we get a position far enough from current
+            do {
+                newX = padding + Math.random() * (maxX - padding);
+                newY = padding + Math.random() * (maxY - padding);
+                attempts++;
+            } while (
+                attempts < 50 && 
+                Math.abs(newX - btnRect.left) < 100 && 
+                Math.abs(newY - btnRect.top) < 100
+            );
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            noBtn.style.zIndex = '1000';
+            noBtn.style.transition = 'left 0.15s ease-out, top 0.15s ease-out';
+        });
+
+        // Yes button celebration
+        yesBtn.addEventListener('click', function() {
+            questionCard.classList.add('fade-out');
+            
+            setTimeout(() => {
+                questionCard.classList.add('hidden');
+                celebration.classList.remove('hidden');
+                
+                // Trigger explosion animation
+                setTimeout(() => {
+                    explosionContainer.classList.add('explode');
+                    
+                    // Show final message after explosion
+                    setTimeout(() => {
+                        explosionContainer.classList.add('hidden');
+                        finalMessage.classList.remove('hidden');
+                        finalMessage.classList.add('fade-in');
+                    }, 1500);
+                }, 100);
+            }, 500);
+        });
+    </script>
+</body>
+</html>
